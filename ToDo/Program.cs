@@ -9,8 +9,8 @@ int id = 1, opcion, duracion;
 string? descripcion;
 do
 {
-    Console.WriteLine("--- Menu ---\n1- Cargar Nuevas tareas\n2- Marcar como Realizada\n3- Buscar Tarea\n4- Mostrar Lista de Pendientes\n5- Mostrar Lista de Realizadas\n0- Salir");
-    int.TryParse(Console.ReadLine(), out opcion);
+    Console.WriteLine("\n--- Menu ---\n1- Cargar Nuevas tareas\n2- Marcar como Realizada\n3- Buscar Tarea\n4- Mostrar Lista de Pendientes\n5- Mostrar Lista de Realizadas\n0- Salir");
+    opcion = Convert.ToInt32(Console.ReadLine());
     switch (opcion)
     {
         case 1:
@@ -20,7 +20,7 @@ do
             moverTareas(tareasPendientes, tareasRealizadas);
             break;
         case 3:
-            /* buscarTarea(tareasPendientes); */
+            buscarTarea(tareasPendientes);
             break;
         case 4:
             Console.WriteLine($"Tareas Pendientes: ");
@@ -43,7 +43,7 @@ void crearTareas(List<Tarea> tareas, int id )
     int cantTareas = rand.Next(3, 6);
     for (int i = 0; i < cantTareas; i++)
     {
-        Console.WriteLine($"Duracion de la tarea: ");
+        Console.WriteLine($"Duracion de la tarea {id}: ");
         duracion = Convert.ToInt32(Console.ReadLine());
         if (duracion > 100 || duracion < 10)
         {
@@ -77,6 +77,19 @@ void moverTareas(List<Tarea> pendientes, List<Tarea> realizadas)
         }
     }
     pendientes.RemoveAt(id - 1);
+}
+
+void buscarTarea(List<Tarea> pendiente)
+{
+    Console.WriteLine("Ingrese la descripcion de la tarea que busca:");
+    string descripcion = Console.ReadLine();
+    foreach (Tarea tarea in pendiente)
+    {
+        if (tarea.Descripcion.Contains(descripcion))
+        {
+            Console.WriteLine($"La tarea '{tarea.Descripcion}' tiene una duracion de {tarea.Duracion} y su id es {tarea.TareaId}");
+        }
+    }
 }
 
 static void MostrarTarea(Tarea tarea)
